@@ -11,6 +11,8 @@
   "author": "Priyanka Hariharan",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4"
+    "bad-words": "^3.0.2",
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
   }
 }
