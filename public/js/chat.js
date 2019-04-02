@@ -13,6 +13,10 @@ const $messages = document.querySelector('#messages')
 const messageTemplate = document.querySelector('#messages-template').innerHTML
 const locationTemplate = document.querySelector('#location-message-template').innerHTML
 
+//Options
+//q=Name&room=Roomname ignoreQueryPrefix gets rid of the leading 'q'
+//returns dictionary of key-val pairs
+const { username, room } = Qs.parse(location.search, {ignoreQueryPrefix: true})
 
 socket.on('message', (message) => {
     console.log(message.text)
@@ -65,3 +69,5 @@ $locationButton.addEventListener('click', () => {
         })
     })
 })
+
+socket.emit('join', { username, room })

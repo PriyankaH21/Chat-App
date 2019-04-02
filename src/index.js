@@ -17,8 +17,18 @@ app.use(express.static(publicDirectoryPath))
 //called everytime a new connection(client) connects to server
 io.on('connection', (socket) => {
     console.log('New WebSocket Connection')
-    socket.emit('message', generateMessage("Welcome"))
-    socket.broadcast.emit('message', generateMessage("A new user joined"))
+
+    socket.on('join', ({username, room}) => {
+      // call join to subscribe the socket to a given channel
+        socket.join(room)
+
+        socket.emit('message', generateMessage("Welcome"))
+        socket.broadcast.to(room).emit('message', generateMessage(`${username} has joined!`))
+      //socket.emit, io.emit, socket.broadcast.emit
+      //io.to.emit - emit to specific Room
+      //socket.broadcast.to.emit - emit to specifi chatroom except current client
+    })
+
     socket.on('sendMessage', (message, callback) => {
         const filter = new Filter();
         if (filter.isProfane(message)) {
